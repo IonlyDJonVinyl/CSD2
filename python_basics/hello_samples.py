@@ -1,19 +1,22 @@
 import simpleaudio as sa
-
+import time
 
 clap = sa.WaveObject.from_wave_file('/home/peppy/Desktop/SAMPLES/one-shots/drums/claps/TSP_NOISIA_V2_clap_clappe.wav')
 
+amount = int(input("How many notes: "))
+bpm = int(input("What is the BPM?: "))
 
-# Get the username from the command line
+array=[]
+for i in range(amount):
+    length = float(input(f"Note {i} length?: "))
+    array.append(length)
 
-username = input("Please enter your username: ")
-samples = input("Please enter sample amount:")
+print(array)
 
+bps = bpm / 60
 
-# Print the greeting
-print("Hello, " + username + "!")
-
-for i in range(int(samples)): 
+for length in array:
     play_obj = clap.play()
     play_obj.wait_done()
-
+    time.sleep(length / bps)
+    play_obj.wait_done()
