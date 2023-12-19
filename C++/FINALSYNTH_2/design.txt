@@ -1,0 +1,22 @@
+3x OSC:
+
+    Oscillator[] oscs[3];
+    int[] offsets[3];
+
+    void tick();
+
+
+//////////
+
+int* add(int a, int b) {
+    int d = 2;
+    int c = new int(a + b + d);
+    return &c;
+}
+
+{
+    int a = 2;
+    int b = 5;
+    int* result = add(a, b);
+    delete result;
+}

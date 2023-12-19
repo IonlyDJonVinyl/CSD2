@@ -1,0 +1,7 @@
+midi 60 1 1                               
+midi 72 2 1
+midi 60 4 1  
+midi 72 1 1
+midi 61 1 1
+midi 62 1 1
+midi 63 1 1
