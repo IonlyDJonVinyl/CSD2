@@ -9,6 +9,7 @@ public:
   Oscillator(float frequency, float samplerate = 44100);
   virtual ~Oscillator() = default;
   void setSamplerate(float samplerate);
+  float getSampleRate();
   //return the current sample
   float getSample();
   // go to next sample
@@ -19,7 +20,7 @@ public:
   float getFrequency();
 
 protected:
-  const float pi = acos (-1);  //atan(1) * 4; <-- vak van Pieter.
+  float pi = acos (-1);  //atan(1) * 4; <-- vak van Pieter.
   float frequency;
   float amplitude;
   float phase;

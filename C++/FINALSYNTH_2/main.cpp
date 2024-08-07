@@ -7,6 +7,7 @@
 #include "math.h"
 #include "tripleosc.h"
 #include "utils.h"
+#include "modulator.h"
 
 class MelodyGenerator {
 public:
@@ -80,7 +81,8 @@ public:
       //buffer.outputChannels[0][i] = sine.getSample();
       //sine.tick();
       mg.tick(&osc);
-      buffer.outputChannels[0][i] = osc.getSample();
+      mod.tick();
+      buffer.outputChannels[0][i] = (osc.getSample()+mod.getSample())*0.5;
       osc.tick();
     }
   }
@@ -97,10 +99,19 @@ public:
     return &mg;
   }
 
+  Modulator* getModulator() {
+    return &mod;
+  }
+
   private:
   float samplerate = 44100;
   Square sine = Square(220, samplerate);
   TripleOsc osc = TripleOsc(60, 1, 0, 2, 12, 3, 0, samplerate); // 1st = MIDI, 2nd = OSC Type 1, 3th = offset Type 1 4th = OSC Type 2 5th = offset Type 2 6th = OSC Type 3, 7th = offset Type 3. 
+  
+  Sine modSine = Sine(8, samplerate);
+  Sine oscSine = Sine(440, samplerate);
+  Modulator mod = Modulator(&modSine, &oscSine, 2);
+  
   MelodyGenerator mg = MelodyGenerator(samplerate);
 };
 
@@ -164,21 +175,26 @@ int main(int argc,char **argv)
             osc1 = 1;
         } else if (osc1Type.compare("saw")==0) {
             osc1 = 2;
-        } else if (osc1Type.compare("square")==0){
+        } else if (osc1Type.compare("square")==0) {
             osc1 = 3;
-        } else if (osc2Type.compare("sine")==0){
+        }
+        
+        if (osc2Type.compare("sine")==0){
             osc2 = 1;
         } else if (osc2Type.compare("saw")==0){
             osc2 = 2;
         } else if (osc2Type.compare("square")==0){
             osc2 = 3;
-        } else if (osc3Type.compare("sine")==0){
+        }
+        
+        if (osc3Type.compare("sine")==0) {
             osc3 = 1;
-        } else if (osc3Type.compare("saw")==0){
+        } else if (osc3Type.compare("saw")==0) {
             osc3 = 2;
-        } else if (osc3Type.compare("square")==0){
+        } else if (osc3Type.compare("square")==0) {
             osc3 = 3;
         }
+
         callback.getTripleOsc()->pause();
         sleep(1);
         callback.getTripleOsc()->change(osc1, osc1Offset, osc2, osc2Offset, osc3, osc3Offset);

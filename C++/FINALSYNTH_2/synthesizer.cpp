@@ -1,7 +1,7 @@
 #include "synthesizer.h"
 #include <cmath>
 
-Synthesizer::Synthesizer(float sampleRate) : sampleRate(sampleRate) {
+Synthesizer::Synthesizer(float sampleRate) : Oscillator(calcFrequency(this->note), sampleRate) {
 
 }
 
@@ -15,6 +15,15 @@ void Synthesizer::setNote(int note) {
 
 float Synthesizer::getSample() {
     return sample;
+}
+
+void Synthesizer::setFrequency(float frequency) {
+    this->frequency = frequency;
+    this->setNote(this->calcNote(frequency));
+}
+
+float Synthesizer::getFrequency(){
+    return this->calcFrequency(note);
 }
 
 void Synthesizer::setSampleRate(float sampleRate) {

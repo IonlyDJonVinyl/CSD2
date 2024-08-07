@@ -11,6 +11,9 @@ void Oscillator::setSamplerate(float samplerate) {
   this->samplerate =samplerate;
 }
 
+float Oscillator::getSampleRate() {
+  return this->samplerate;
+}
 
 
 float Oscillator::getSample() {

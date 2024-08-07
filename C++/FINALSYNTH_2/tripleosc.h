@@ -15,7 +15,6 @@ public:
     void change(int osc1, float off1, int osc2, float off2, int osc3, float off3);
 
 private:
-
     Oscillator* oscs[3];
     float offsets[3];
 
