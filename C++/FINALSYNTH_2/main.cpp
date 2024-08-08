@@ -8,6 +8,7 @@
 #include "tripleosc.h"
 #include "utils.h"
 #include "modulator.h"
+#include "fmosc.h"
 
 class MelodyGenerator {
 public:
@@ -70,6 +71,9 @@ public:
     samplerate = (float) rate;
     sine.setSamplerate(samplerate);
     osc.setSampleRate(samplerate);
+    modSine.setSamplerate(samplerate);
+    oscSine.setSamplerate(samplerate);
+    modSine.setAmplitude(2);
     mg.setSampleRate(samplerate);
     mg.play();
     std::cout << "\nsamplerate: " << samplerate << "\n";
@@ -99,18 +103,18 @@ public:
     return &mg;
   }
 
-  Modulator* getModulator() {
+  Fmosc* getModulator() {
     return &mod;
   }
 
   private:
-  float samplerate = 44100;
+  float samplerate = 48000;
   Square sine = Square(220, samplerate);
   TripleOsc osc = TripleOsc(60, 1, 0, 2, 12, 3, 0, samplerate); // 1st = MIDI, 2nd = OSC Type 1, 3th = offset Type 1 4th = OSC Type 2 5th = offset Type 2 6th = OSC Type 3, 7th = offset Type 3. 
   
   Sine modSine = Sine(8, samplerate);
   Sine oscSine = Sine(440, samplerate);
-  Modulator mod = Modulator(&modSine, &oscSine, 2);
+  Fmosc mod = Fmosc(&oscSine, &modSine, samplerate);
   
   MelodyGenerator mg = MelodyGenerator(samplerate);
 };

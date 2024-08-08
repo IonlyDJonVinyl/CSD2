@@ -19,6 +19,9 @@ public:
   void setFrequency(float frequency);
   float getFrequency();
 
+  void setAmplitude(float amplitude);
+  float getAmplitude();
+
 protected:
   float pi = acos (-1);  //atan(1) * 4; <-- vak van Pieter.
   float frequency;
