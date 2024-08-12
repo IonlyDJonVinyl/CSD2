@@ -4,11 +4,12 @@
 #include <cmath>
 #include "oscillator.h"
 
-class Fmosc:public Oscillator
+class Fmosc:public Synthesizer
 {
 public:
    Fmosc(Oscillator* oscillator, Oscillator* modulator, float samplerate = 44100);
    void tick();
+   void setNote(int note);
 
 
 private:

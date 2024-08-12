@@ -28,7 +28,7 @@ public:
         time = 0;
     }
 
-    void tick(Synthesizer* synth) {
+    void tick(Synthesizer* synth, Synthesizer* synth2) {
         time+=1.0f/sampleRate;
         float startAt = 0;
         for (int i = 0; i < notes.size(); i++) {
@@ -36,12 +36,15 @@ public:
             float endAt = startAt+duration;
             if (startAt <= time && endAt > time) {
                 synth->setNote(notes[i]);
+                synth2->setNote(notes[i]);
                 synth->setAmplitude(amplitudes[i]*amplitude);
+                synth2->setAmplitude(amplitudes[i]*amplitude);
                 return;
             }
             startAt += duration;
         }
         synth->setAmplitude(0);
+        synth2->setAmplitude(0);
     }
 
     void setAmplitude(float amp) {
@@ -84,7 +87,7 @@ public:
       // write sample to buffer at channel 0, amp = 0.25
       //buffer.outputChannels[0][i] = sine.getSample();
       //sine.tick();
-      mg.tick(&osc);
+      mg.tick(&osc, &mod);
       mod.tick();
       buffer.outputChannels[0][i] = (osc.getSample()+mod.getSample())*0.5;
       osc.tick();

@@ -2,7 +2,7 @@
 #include "math.h"
 
 Fmosc::Fmosc(Oscillator* oscillator, Oscillator* modulator, float samplerate):
-        Oscillator(oscillator->getFrequency(), samplerate), oscillator(oscillator), modulator(modulator) {
+        Synthesizer(samplerate), oscillator(oscillator), modulator(modulator) {
 }
 
 void Fmosc::tick() {
@@ -15,4 +15,9 @@ void Fmosc::tick() {
 
   oscillator->tick();
   this->sample = oscillator->getSample();
+}
+
+void Fmosc::setNote(int note) {
+    Synthesizer::setNote(note); //Set note of synthesizer
+        oscillator->setFrequency(calcFrequency(note+offsets[i])); //Calculate new frequency for each oscillator
 }
